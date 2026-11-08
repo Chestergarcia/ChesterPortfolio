@@ -1,22 +1,22 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { createRoot } from 'react-dom/client'
-import { motion } from 'framer-motion'
+import { motion, useAnimationControls, useReducedMotion } from 'framer-motion'
 import {
-  MapPin, Mail, Phone, Globe, Download, ArrowUpRight, ChevronDown,
-  BriefcaseBusiness, GraduationCap, Palette, Code2, Figma, Layers,
+  MapPin, Mail, Globe, ArrowUpRight, ChevronDown,
+  BriefcaseBusiness, Palette, Code2, Figma, Layers,
   MonitorSmartphone, Menu, X, Send
 } from 'lucide-react'
 import './styles.css'
 
 const tech = [
-  { name: 'Figma', icon: <Figma /> },
-  { name: 'Framer', icon: <Layers /> },
-  { name: 'Photoshop', icon: <Palette /> },
-  { name: 'Shopify', icon: <Globe /> },
-  { name: 'HTML', icon: <Code2 /> },
-  { name: 'CSS', icon: <Code2 /> },
-  { name: 'JavaScript', icon: <Code2 /> },
-  { name: 'Notion', icon: <BriefcaseBusiness /> },
+  { name: 'Figma', icon: <Figma />, url: 'https://www.figma.com/' },
+  { name: 'Framer', icon: <Layers />, url: 'https://www.framer.com/' },
+  { name: 'Photoshop', icon: <Palette />, url: 'https://www.adobe.com/products/photoshop.html' },
+  { name: 'Shopify', icon: <Globe />, url: 'https://www.shopify.com/' },
+  { name: 'HTML', icon: <Code2 />, url: 'https://developer.mozilla.org/en-US/docs/Web/HTML' },
+  { name: 'CSS', icon: <Code2 />, url: 'https://developer.mozilla.org/en-US/docs/Web/CSS' },
+  { name: 'JavaScript', icon: <Code2 />, url: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript' },
+  { name: 'Notion', icon: <BriefcaseBusiness />, url: 'https://www.notion.so/' },
 ]
 const skills = ['UI Design', 'Web Design', 'Prototyping', 'Responsive Design', 'Visual Design', 'HTML & CSS', 'Figma', 'Framer']
 
@@ -79,13 +79,49 @@ function SectionTitle({ children, eyebrow }) {
 }
 
 function TechTicker() {
+  const shouldReduceMotion = useReducedMotion()
+  const tickerControls = useAnimationControls()
+
+  useEffect(() => {
+    if (shouldReduceMotion) {
+      tickerControls.set({ x: '0%' })
+      return
+    }
+
+    tickerControls.start({
+      x: ['0%', '-50%'],
+      transition: { duration: 24, repeat: Infinity, ease: 'linear' }
+    })
+    return () => tickerControls.stop()
+  }, [shouldReduceMotion, tickerControls])
+
   return (
     <div className="ticker" aria-label="Tools and technologies">
-      <motion.div className="ticker-track" animate={{ x: ['0%', '-50%'] }} transition={{ duration: 24, repeat: Infinity, ease: 'linear' }}>
-        {[...tech, ...tech].map((item, i) => (
-          <div className="tech-chip" key={`${item.name}-${i}`}>
+      <motion.div
+        className="ticker-track"
+        animate={tickerControls}
+        onHoverStart={() => tickerControls.stop()}
+        onHoverEnd={() => {
+          if (!shouldReduceMotion) {
+            tickerControls.start({ x: ['0%', '-50%'], transition: { duration: 24, repeat: Infinity, ease: 'linear' } })
+          }
+        }}
+        onFocusCapture={() => tickerControls.stop()}
+        onBlurCapture={event => {
+          if (!event.currentTarget.contains(event.relatedTarget) && !shouldReduceMotion) {
+            tickerControls.start({ x: ['0%', '-50%'], transition: { duration: 24, repeat: Infinity, ease: 'linear' } })
+          }
+        }}
+      >
+        {tech.map(item => (
+          <a className="tech-chip" href={item.url} key={item.name} target="_blank" rel="noreferrer">
+            <span className="tech-icon">{item.icon}</span><span>{item.name}</span><span className="sr-only">(opens in a new tab)</span>
+          </a>
+        ))}
+        {tech.map(item => (
+          <a className="tech-chip" href={item.url} key={`${item.name}-duplicate`} target="_blank" rel="noreferrer" tabIndex={-1} aria-hidden="true">
             <span className="tech-icon">{item.icon}</span><span>{item.name}</span>
-          </div>
+          </a>
         ))}
       </motion.div>
     </div>
@@ -108,9 +144,9 @@ function App() {
   return (
     <div className="site-shell" id="home">
       <header className="topbar">
-        <button className="mobile-brand" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>CG<span>.</span></button>
-        <button className="menu-toggle" aria-label="Toggle navigation" onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X /> : <Menu />}</button>
-        <nav className={menuOpen ? 'nav-links open' : 'nav-links'}>
+        <button className="mobile-brand" type="button" aria-label="Back to home" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>CG<span>.</span></button>
+        <button className="menu-toggle" type="button" aria-label={menuOpen ? 'Close navigation' : 'Open navigation'} aria-expanded={menuOpen} aria-controls="site-navigation" onClick={() => setMenuOpen(!menuOpen)}>{menuOpen ? <X /> : <Menu />}</button>
+        <nav id="site-navigation" className={menuOpen ? 'nav-links open' : 'nav-links'}>
           {nav.map(item => <a key={item} href={`#${item.toLowerCase()}`} onClick={() => setMenuOpen(false)}>{item}</a>)}
         </nav>
       </header>
@@ -127,7 +163,7 @@ function App() {
           <div className="profile-meta"><Globe /><a href="https://chester-garcia.framer.website" target="_blank" rel="noreferrer">Portfolio website</a></div>
           <div className="profile-meta"><Mail /><a href="mailto:chesterg05@gmail.com">chesterg05@gmail.com</a></div>
           <div className="profile-rule" />
-          <a className="button button-outline" href={`${import.meta.env.BASE_URL}Chester-Garcia-CV.pdf`} download>Download CV <Download size={14} /></a>
+          <a className="button button-outline" href="mailto:chesterg05@gmail.com?subject=Request%20for%20CV" aria-label="Request a copy of Chester's CV by email">Request CV <Mail size={14} /></a>
           <a className="button button-dark" href="#contact">Contact Me</a>
           <p className="profile-note">Open to learning, collaboration, and new opportunities.</p>
         </aside>
@@ -168,7 +204,7 @@ function App() {
             <SectionTitle eyebrow="A FEW THINGS I'VE WORKED ON">Selected Projects</SectionTitle>
             <div className="project-list">
               {projects.map(project => (
-                <a className="project-card" href={project.link} key={project.title}>
+                <a className="project-card" href={project.link} key={project.title} onClick={() => setForm(current => ({ ...current, subject: `Project inquiry: ${project.title}` }))}>
                   <span className={`project-icon ${project.color}`}>{project.icon}</span>
                   <span className="project-copy"><strong>{project.title}</strong><small>{project.type}</small><span>{project.description}</span></span>
                   <ArrowUpRight className="project-arrow" size={16} />
