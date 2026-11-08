@@ -117,7 +117,7 @@ function App() {
 
       <main className="layout">
         <aside className="profile-card">
-          <img className="portrait" src="/profile.jpg" alt="Portrait of Chester Garcia" />
+          <img className="portrait" src={`${import.meta.env.BASE_URL}profile.jpg`} alt="Portrait of Chester Garcia" />
           <span className="hello">Hello, I'm</span>
           <h1>Chester Garcia</h1>
           <p className="profile-role">UI/UX & Web Designer,<br />Digital Creative.</p>
@@ -127,7 +127,7 @@ function App() {
           <div className="profile-meta"><Globe /><a href="https://chester-garcia.framer.website" target="_blank" rel="noreferrer">Portfolio website</a></div>
           <div className="profile-meta"><Mail /><a href="mailto:chesterg05@gmail.com">chesterg05@gmail.com</a></div>
           <div className="profile-rule" />
-          <a className="button button-outline" href="/Chester-Garcia-CV.pdf" download>Download CV <Download size={14} /></a>
+          <a className="button button-outline" href={`${import.meta.env.BASE_URL}Chester-Garcia-CV.pdf`} download>Download CV <Download size={14} /></a>
           <a className="button button-dark" href="#contact">Contact Me</a>
           <p className="profile-note">Open to learning, collaboration, and new opportunities.</p>
         </aside>
