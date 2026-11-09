@@ -153,7 +153,7 @@ function App() {
 
       <main className="layout">
         <aside className="profile-card">
-          <img className="portrait" src={`${import.meta.env.BASE_URL}profile.jpg`} alt="Portrait of Chester Garcia" />
+          <img className="portrait" src={`${import.meta.env.BASE_URL}profile.png`} alt="Portrait of Chester Garcia" />
           <span className="hello">Hello, I'm</span>
           <h1>Chester Garcia</h1>
           <p className="profile-role">UI/UX & Web Designer,<br />Digital Creative.</p>
