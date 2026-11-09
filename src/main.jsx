@@ -3,20 +3,23 @@ import { createRoot } from 'react-dom/client'
 import { motion, useAnimationControls, useReducedMotion } from 'framer-motion'
 import {
   MapPin, Mail, Globe, ArrowUpRight, ChevronDown,
-  BriefcaseBusiness, Palette, Code2, Figma, Layers,
+  BriefcaseBusiness, Palette, Code2,
   MonitorSmartphone, Menu, X, Send
 } from 'lucide-react'
+import {
+  siFigma, siFramer, siShopify, siHtml5, siCss, siJavascript, siNotion
+} from 'simple-icons'
 import './styles.css'
 
 const tech = [
-  { name: 'Figma', icon: <Figma />, url: 'https://www.figma.com/' },
-  { name: 'Framer', icon: <Layers />, url: 'https://www.framer.com/' },
-  { name: 'Photoshop', icon: <Palette />, url: 'https://www.adobe.com/products/photoshop.html' },
-  { name: 'Shopify', icon: <Globe />, url: 'https://www.shopify.com/' },
-  { name: 'HTML', icon: <Code2 />, url: 'https://developer.mozilla.org/en-US/docs/Web/HTML' },
-  { name: 'CSS', icon: <Code2 />, url: 'https://developer.mozilla.org/en-US/docs/Web/CSS' },
-  { name: 'JavaScript', icon: <Code2 />, url: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript' },
-  { name: 'Notion', icon: <BriefcaseBusiness />, url: 'https://www.notion.so/' },
+  { name: 'Figma', icon: siFigma },
+  { name: 'Framer', icon: siFramer },
+  { name: 'Photoshop', shortName: 'Ps', color: '#31a8ff' },
+  { name: 'Shopify', icon: siShopify },
+  { name: 'HTML', icon: siHtml5 },
+  { name: 'CSS', icon: siCss },
+  { name: 'JavaScript', icon: siJavascript },
+  { name: 'Notion', icon: siNotion },
 ]
 const skills = ['UI Design', 'Web Design', 'Prototyping', 'Responsive Design', 'Visual Design', 'HTML & CSS', 'Figma', 'Framer']
 
@@ -96,32 +99,22 @@ function TechTicker() {
   }, [shouldReduceMotion, tickerControls])
 
   return (
-    <div className="ticker" aria-label="Tools and technologies">
+    <div className="ticker" role="region" aria-label="Tools and technologies">
       <motion.div
         className="ticker-track"
         animate={tickerControls}
-        onHoverStart={() => tickerControls.stop()}
-        onHoverEnd={() => {
-          if (!shouldReduceMotion) {
-            tickerControls.start({ x: ['0%', '-50%'], transition: { duration: 24, repeat: Infinity, ease: 'linear' } })
-          }
-        }}
-        onFocusCapture={() => tickerControls.stop()}
-        onBlurCapture={event => {
-          if (!event.currentTarget.contains(event.relatedTarget) && !shouldReduceMotion) {
-            tickerControls.start({ x: ['0%', '-50%'], transition: { duration: 24, repeat: Infinity, ease: 'linear' } })
-          }
-        }}
       >
-        {tech.map(item => (
-          <a className="tech-chip" href={item.url} key={item.name} target="_blank" rel="noreferrer">
-            <span className="tech-icon">{item.icon}</span><span>{item.name}</span><span className="sr-only">(opens in a new tab)</span>
-          </a>
-        ))}
-        {tech.map(item => (
-          <a className="tech-chip" href={item.url} key={`${item.name}-duplicate`} target="_blank" rel="noreferrer" tabIndex={-1} aria-hidden="true">
-            <span className="tech-icon">{item.icon}</span><span>{item.name}</span>
-          </a>
+        {[false, true].map(duplicate => (
+          <div className="ticker-group" key={duplicate ? 'duplicate' : 'primary'} role={duplicate ? undefined : 'list'} aria-hidden={duplicate || undefined}>
+            {tech.map(item => (
+              <div className="tech-chip" key={item.name} role={duplicate ? undefined : 'listitem'}>
+                <span className={`tech-icon${item.shortName ? ' tech-icon-photoshop' : ''}`} style={item.shortName ? { color: item.color } : { color: `#${item.icon.hex}` }}>
+                  {item.shortName ? item.shortName : <svg viewBox="0 0 24 24" aria-hidden="true"><path d={item.icon.path} /></svg>}
+                </span>
+                <span>{item.name}</span>
+              </div>
+            ))}
+          </div>
         ))}
       </motion.div>
     </div>

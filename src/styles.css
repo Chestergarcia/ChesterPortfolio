@@ -69,11 +69,12 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .experience-detail { margin: -2px 0 15px 51px; color: #706d66; font-size: 12px; line-height: 1.65; overflow: hidden; }
 .ticker-label { color: #9b8050; font-size: 11px; font-weight: 700; letter-spacing: 1.3px; padding: 1px 2px 0; }
 .ticker { overflow: hidden; position: relative; padding: 1px 0 3px; }
-.ticker-track { display: flex; width: max-content; gap: 12px; }
-.tech-chip { display: flex; align-items: center; min-height: 44px; gap: 9px; background: white; border: 1px solid var(--line); border-radius: 10px; padding: 9px 16px; font-size: 12px; font-weight: 600; white-space: nowrap; transition: border-color .2s, color .2s, transform .2s; }
-.tech-chip:hover { border-color: #d7bc8d; color: #8d692f; transform: translateY(-1px); }
-.tech-icon { display: flex; color: #777168; }
-.tech-icon svg { width: 18px; height: 18px; }
+.ticker-track { display: flex; width: max-content; will-change: transform; }
+.ticker-group { display: flex; flex: 0 0 auto; gap: 12px; padding-right: 12px; }
+.tech-chip { display: flex; align-items: center; min-height: 44px; gap: 9px; background: white; border: 1px solid var(--line); border-radius: 10px; padding: 9px 16px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+.tech-icon { display: flex; flex: 0 0 auto; }
+.tech-icon svg { display: block; width: 18px; height: 18px; fill: currentColor; }
+.tech-icon-photoshop { width: 19px; height: 19px; align-items: center; justify-content: center; border-radius: 3px; background: #001e36; font-size: 11px; font-weight: 700; letter-spacing: -.5px; line-height: 1; }
 .projects-panel { padding-bottom: 20px; }
 .project-list { display: flex; flex-direction: column; gap: 12px; }
 .project-card { display: flex; align-items: flex-start; gap: 13px; border: 1px solid #e8e5df; border-radius: 10px; padding: 15px; transition: border-color .2s, transform .2s, box-shadow .2s; }
