@@ -138,7 +138,7 @@ function App() {
     e.preventDefault()
     const subject = encodeURIComponent(form.subject || 'Portfolio inquiry')
     const body = encodeURIComponent(`Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`)
-    window.location.href = `mailto:chesterg05@gmail.com?subject=${subject}&body=${body}`
+    window.location.href = `mailto:gchester005@gmail.com?subject=${subject}&body=${body}`
   }
 
   return (
@@ -160,10 +160,10 @@ function App() {
           <div className="profile-rule" />
           <div className="availability"><span className="status-dot" />Available for opportunities</div>
           <div className="profile-meta"><MapPin />Philippines</div>
-          <div className="profile-meta"><Globe /><a href="https://chester-garcia.framer.website" target="_blank" rel="noreferrer">Portfolio website</a></div>
-          <div className="profile-meta"><Mail /><a href="mailto:chesterg05@gmail.com">chesterg05@gmail.com</a></div>
+          <div className="profile-meta"><Globe /><a href="https://chestergarcia.github.io/ChesterPortfolio/" target="_blank" rel="noreferrer">Portfolio website</a></div>
+          <div className="profile-meta"><Mail /><a href="mailto:gchester005@gmail.com">gchester005@gmail.com</a></div>
           <div className="profile-rule" />
-          <a className="button button-outline" href="mailto:chesterg05@gmail.com?subject=Request%20for%20CV" aria-label="Request a copy of Chester's CV by email">Request CV <Mail size={14} /></a>
+          <a className="button button-outline" href="mailto:gchester005@gmail.com?subject=Request%20for%20CV" aria-label="Request a copy of Chester's CV by email">Request CV <Mail size={14} /></a>
           <a className="button button-dark" href="#contact">Contact Me</a>
           <p className="profile-note">Open to learning, collaboration, and new opportunities.</p>
         </aside>
