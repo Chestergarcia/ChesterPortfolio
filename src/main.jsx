@@ -23,6 +23,17 @@ const tech = [
 ]
 const skills = ['UI Design', 'Web Design', 'Prototyping', 'Responsive Design', 'Visual Design', 'HTML & CSS', 'Figma', 'Framer']
 
+const createGmailComposeUrl = (subject, body) => {
+  const params = new URLSearchParams({
+    view: 'cm',
+    fs: '1',
+    to: 'gchester005@gmail.com',
+    su: subject,
+    body,
+  })
+  return `https://mail.google.com/mail/?${params.toString()}`
+}
+
 const experience = [
   {
     role: 'Independent UI/UX & Web Design',
@@ -55,7 +66,6 @@ const projects = [
     tag: 'Dashboard',
     color: 'mint',
     icon: '▦',
-    link: '#contact'
   },
   {
     title: 'WorkSync — HR Management Dashboard',
@@ -64,7 +74,6 @@ const projects = [
     tag: 'Product UI',
     color: 'peach',
     icon: '◎',
-    link: '#contact'
   },
   {
     title: 'WorkSync — Website Design',
@@ -73,7 +82,6 @@ const projects = [
     tag: 'Website',
     color: 'blue',
     icon: '◉',
-    link: '#contact'
   },
 ]
 
@@ -127,12 +135,6 @@ function App() {
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
 
   const nav = ['Home', 'About', 'Skills', 'Experience', 'Projects', 'Contact']
-  const submitForm = (e) => {
-    e.preventDefault()
-    const subject = encodeURIComponent(form.subject || 'Portfolio inquiry')
-    const body = encodeURIComponent(`Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`)
-    window.location.href = `mailto:gchester005@gmail.com?subject=${subject}&body=${body}`
-  }
 
   return (
     <div className="site-shell" id="home">
@@ -156,7 +158,7 @@ function App() {
           <div className="profile-meta"><Globe /><a href="https://chestergarcia.github.io/ChesterPortfolio/" target="_blank" rel="noreferrer">Portfolio website</a></div>
           <div className="profile-meta"><Mail /><a href="mailto:gchester005@gmail.com">gchester005@gmail.com</a></div>
           <div className="profile-rule" />
-          <a className="button button-outline" href="mailto:gchester005@gmail.com?subject=Request%20for%20CV" aria-label="Request a copy of Chester's CV by email">Request CV <Mail size={14} /></a>
+          <a className="button button-outline" href={createGmailComposeUrl('Request for CV', 'Hello, I would like to request a copy of your CV.\n\nMy name:\nMy email:')} target="_blank" rel="noreferrer" aria-label="Request a copy of Chester's CV by email">Request CV <Mail size={14} /></a>
           <a className="button button-dark" href="#contact">Contact Me</a>
           <p className="profile-note">Open to learning, collaboration, and new opportunities.</p>
         </aside>
@@ -197,7 +199,7 @@ function App() {
             <SectionTitle eyebrow="A FEW THINGS I'VE WORKED ON">Selected Projects</SectionTitle>
             <div className="project-list">
               {projects.map(project => (
-                <a className="project-card" href={project.link} key={project.title} onClick={() => setForm(current => ({ ...current, subject: `Project inquiry: ${project.title}` }))}>
+                <a className="project-card" href={createGmailComposeUrl(`Project inquiry: ${project.title}`, `Hello, I would like to know more about ${project.title}.\n\nMy name:\nMy email:`)} key={project.title} target="_blank" rel="noreferrer">
                   <span className={`project-icon ${project.color}`}>{project.icon}</span>
                   <span className="project-copy"><strong>{project.title}</strong><small>{project.type}</small><span>{project.description}</span></span>
                   <ArrowUpRight className="project-arrow" size={16} />
@@ -209,11 +211,12 @@ function App() {
           <section className="panel contact-panel" id="contact">
             <SectionTitle eyebrow="LET'S CONNECT">Contact</SectionTitle>
             <p className="contact-intro">Have a project, opportunity, or question? Send me a message.</p>
-            <form onSubmit={submitForm}>
-              <label>Your Name<input required value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} placeholder="Your name" /></label>
-              <label>Your Email<input required type="email" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} placeholder="you@example.com" /></label>
-              <label>Subject<input value={form.subject} onChange={e => setForm({ ...form, subject: e.target.value })} placeholder="What is this about?" /></label>
-              <label>Message<textarea required rows="4" value={form.message} onChange={e => setForm({ ...form, message: e.target.value })} placeholder="Tell me a little about it..." /></label>
+            <form action="https://formsubmit.co/gchester005@gmail.com" method="POST">
+              <input type="hidden" name="_subject" value={form.subject || 'Portfolio inquiry'} />
+              <label>Your Name<input required name="name" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} placeholder="Your name" /></label>
+              <label>Your Email<input required type="email" name="email" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} placeholder="you@example.com" /></label>
+              <label>Subject<input name="subject" value={form.subject} onChange={e => setForm({ ...form, subject: e.target.value })} placeholder="What is this about?" /></label>
+              <label>Message<textarea required name="message" rows="4" value={form.message} onChange={e => setForm({ ...form, message: e.target.value })} placeholder="Tell me a little about it..." /></label>
               <button className="button button-dark submit-button" type="submit">Send Message <Send size={14} /></button>
             </form>
           </section>
