@@ -80,6 +80,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .project-card { display: flex; align-items: flex-start; gap: 13px; border: 1px solid #e8e5df; border-radius: 10px; padding: 15px; transition: border-color .2s, transform .2s, box-shadow .2s; }
 .project-card:hover, .project-card:focus-visible { border-color: #d7bc8d; transform: translateY(-2px); box-shadow: 0 5px 16px rgba(50,40,20,.05); }
 .project-icon { width: 36px; height: 36px; border: 1px solid #dedbd4; border-radius: 9px; display: grid; place-items: center; font-size: 20px; flex: 0 0 auto; }
+.project-icon svg { width: 18px; height: 18px; stroke-width: 1.8; }
 .project-icon.mint { background: #eff9f2; color: #29945b; }
 .project-icon.peach { background: #fff4eb; color: #d47d3e; }
 .project-icon.blue { background: #eff5ff; color: #4d83d2; }

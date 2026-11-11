@@ -4,7 +4,7 @@ import { motion, useAnimationControls, useReducedMotion } from 'framer-motion'
 import {
   MapPin, Mail, Globe, ArrowUpRight, ChevronDown,
   BriefcaseBusiness, Palette, Code2,
-  MonitorSmartphone, Menu, X, Send
+  LayoutDashboard, MonitorSmartphone, UsersRound, Menu, X, Send
 } from 'lucide-react'
 import {
   siFigma, siFramer, siShopify, siHtml5, siCss, siJavascript, siNotion
@@ -65,7 +65,7 @@ const projects = [
     description: 'A dashboard concept for employee records, attendance monitoring, and HR data. Designed to make key information easier to scan through clear hierarchy and structured navigation.',
     tag: 'Dashboard',
     color: 'mint',
-    icon: '▦',
+    icon: <LayoutDashboard aria-hidden="true" />,
   },
   {
     title: 'WorkSync — HR Management Dashboard',
@@ -73,7 +73,7 @@ const projects = [
     description: 'An interface exploration focused on organizing workplace tasks and people information into a simple, consistent dashboard experience.',
     tag: 'Product UI',
     color: 'peach',
-    icon: '◎',
+    icon: <UsersRound aria-hidden="true" />,
   },
   {
     title: 'WorkSync — Website Design',
@@ -81,7 +81,7 @@ const projects = [
     description: 'A responsive business website concept with clean layouts, straightforward navigation, and a consistent visual system across screen sizes.',
     tag: 'Website',
     color: 'blue',
-    icon: '◉',
+    icon: <MonitorSmartphone aria-hidden="true" />,
   },
 ]
 
